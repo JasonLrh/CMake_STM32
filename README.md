@@ -2,10 +2,27 @@
 using cmake to quickly organizing your cubemx stm32 project  
 > features:
 > 1. HAL/LL and some system library are built as static library so that each time you add your new files/library, you won't wait for a long time rebuilding HAL/LL lib
-> 2.
+> 2. generate compile_commands.json which can easily used by visual studio code's auto-complete system. `c_cpp_properties.json` may be edit as below  
+~~~json
+{
+    "configurations": [
+        {
+            "name": "ProjectName",
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "macos-gcc-arm",
+            "compileCommands": "${workspaceFolder}/cmake_build/compile_commands.json"
+        }
+    ],
+    "version": 4
+}
+~~~
+> 3. beta feature: automatically code import and pack to library(speed up code rebuild when sources change)
 ## tools
-* STM32CubeMX(Generate with Makefile)![IDE](images/1.png)  
-  and have settings as below![Settings](images/2.png)
+* STM32CubeMX(Generate with Makefile)  
+![IDE](images/1.png)  
+  and have settings as below  
+![Settings](images/2.png)
 * STM32CubeProgramer(Flash tool)
 * CMake
 * arm-none-eabi-gcc toolchain(strongly suggest)
@@ -32,7 +49,7 @@ FLOAT-ABI = -mfloat-abi=hard
 
 ## build and flash
 ~~~zsh
-mkdir build # anyname\anywhere
+mkdir cmake_build # anyname\anywhere
 cmake ../   # ../ is the dir with CMakeLists.txt
 make -j     # build with this arg to have max speed
 make flash  # flash to your device
